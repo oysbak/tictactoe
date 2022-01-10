@@ -3,14 +3,24 @@ package tictactoe;
 public class Main {
     public static void main(String[] args) {
         // write your code here
-        GameBoard gameBoard;
+        GameBoard gameBoard = new GameBoard();
         UserInput userInput = new UserInput();
-        userInput.collectInput("Enter the cells: ");
-        gameBoard = new GameBoard(userInput.getCells());
+        userInput.collectSetup("Enter the cells: ");
+        gameBoard.initialize(userInput.getCells());
         gameBoard.draw();
-        userInput.collectInput("Enter the coordinates: ");
-        gameBoard.enterCoordinate(userInput.getCoordinate());
-        gameBoard.draw();
-        System.out.println("X wins");
+        do {
+            userInput.collectInput("Enter the coordinates: ", gameBoard);
+            gameBoard.enterCoordinate(userInput.getCoordinate());
+            gameBoard.draw();
+            String winner = gameBoard.getWinner();
+            if (winner.length() > 0) {
+                System.out.println(winner + " wins");
+            } else if (gameBoard.isDraw()) {
+                System.out.println("Draw");
+            } else {
+                System.out.println("Game not finished");
+            }
+        }
+        while (!gameBoard.isConcluded());
     }
 }

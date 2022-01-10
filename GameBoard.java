@@ -4,15 +4,19 @@ import java.util.Locale;
 
 public class GameBoard {
     String[] cells;
-    int[][] rows = new int[][]{
-            {0, 1, 2},
-            {0, 3, 6},
-            {0, 4, 8},
-            {1, 4, 7},
-            {2, 4, 6},
-            {2, 5, 8},
-            {3, 4, 5},
-            {6, 7, 8}};
+    int[][] rows;
+
+    public GameBoard() {
+        String space = " ";
+        cells = new String[9];
+        for (int i = 0; i < cells.length; i++) {
+            cells[i] = space;
+        }
+        rows = new int[][]{
+                {0, 1, 2}, {0, 3, 6}, {0, 4, 8},
+                {1, 4, 7}, {2, 4, 6}, {2, 5, 8},
+                {3, 4, 5}, {6, 7, 8}};
+    }
 
     private static int getIndex(String[] coordinate) {
         int row = Integer.parseInt(coordinate[0]);
@@ -22,10 +26,6 @@ public class GameBoard {
 
     private static boolean isValidIndex(String[] coordinate) {
         return "123".contains(coordinate[0]) && "123".contains(coordinate[1]);
-    }
-
-    public void initialize(String[] cells) {
-        this.cells = cells;
     }
 
     public void draw() {
@@ -85,7 +85,7 @@ public class GameBoard {
 
     public boolean isDraw() {
         for (String cell : cells) {
-            if( cell.equals(" ")) {
+            if (cell.equals(" ")) {
                 return false;
             }
         }

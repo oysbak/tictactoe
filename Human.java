@@ -2,22 +2,17 @@ package tictactoe;
 
 import java.util.Scanner;
 
-public class UserInput {
-    String[] cells;
-    String[] coordinate;
+public class Human extends Player {
     private final Scanner scanner;
+    String[] coordinate;
     private String input;
 
-    public UserInput() {
+    public Human(String mark) {
+        super(mark);
         scanner = new Scanner(System.in);
     }
 
-    public void collectSetup(String prompt) {
-        System.out.print(prompt);
-        input = scanner.nextLine();
-        cells = input.replace("_", " ").split("");
-    }
-
+    @Override
     public void collectInput(String prompt, GameBoard gameBoard) {
         boolean doContinue;
         do {
@@ -32,10 +27,7 @@ public class UserInput {
         } while (!doContinue);
     }
 
-    public String[] getCells() {
-        return cells;
-    }
-
+    @Override
     public String[] getCoordinate() {
         return coordinate;
     }

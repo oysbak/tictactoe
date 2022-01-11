@@ -3,23 +3,27 @@ package tictactoe;
 import java.util.Random;
 
 public class Machine extends Player {
-    private String[] coordinate;
 
-    public Machine(String mark) {
-        super(mark);
+    public Machine(GameBoard gameBoard, String mark) {
+        super(gameBoard, mark);
     }
 
     @Override
-    public void collectInput(String prompt, GameBoard gameBoard) {
-        boolean isOccupied = false;
+    public void requestShot(String prompt) {
+        System.out.println(prompt);
+        String[] coordinate;
+        boolean isOccupied;
         do {
-            int index = new Random().nextInt(8);
-            coordinate = new String[]{"", ""};
+            coordinate = getRandomCoordinate();
+            isOccupied = gameBoard.isOccupiedCell(coordinate);
         } while (isOccupied);
+        shot = new Shot(coordinate, mark);
     }
 
-    @Override
-    public String[] getCoordinate() {
-        return this.coordinate;
+    private String[] getRandomCoordinate() {
+        Random random = new Random();
+        String row = String.valueOf(random.nextInt(3) + 1);
+        String column = String.valueOf(random.nextInt(3) + 1);
+        return new String[]{row, column};
     }
 }

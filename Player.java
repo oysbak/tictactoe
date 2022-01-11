@@ -1,15 +1,18 @@
 package tictactoe;
 
 public abstract class Player {
-    protected String mark;
+    public final String mark;
+    public final GameBoard gameBoard;
+    protected Shot shot;
 
-    Player(){}
-
-    public Player(String mark) {
+    public Player(GameBoard gameBoard, String mark) {
         this.mark = mark;
+        this.gameBoard = gameBoard;
     }
 
-    public abstract void collectInput(String prompt, GameBoard gameBoard);
+    public abstract void requestShot(String prompt);
 
-    public abstract String[] getCoordinate();
+    public Shot getShot() {
+        return shot;
+    }
 }

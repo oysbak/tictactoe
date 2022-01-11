@@ -8,10 +8,7 @@ public class GameBoard {
 
     public GameBoard() {
         String space = " ";
-        cells = new String[9];
-        for (int i = 0; i < cells.length; i++) {
-            cells[i] = space;
-        }
+        cells = new String[]{space, space, space, space, space, space, space, space, space};
         rows = new int[][]{
                 {0, 1, 2}, {0, 3, 6}, {0, 4, 8},
                 {1, 4, 7}, {2, 4, 6}, {2, 5, 8},
@@ -36,39 +33,17 @@ public class GameBoard {
         System.out.println("---------");
     }
 
-    public void enterCoordinate(String[] coordinate) {
-        cells[getIndex(coordinate)] = getNextMark();
+    public void placeShot(Shot shot) {
+        cells[getIndex(shot.coordinate)] = shot.mark;
     }
 
-    private String getNextMark() {
-        int x = 0;
-        int o = 0;
-        for (String cell : cells) {
-            switch (cell) {
-                case "X":
-                    x++;
-                    break;
-                case "O":
-                    o++;
-                    break;
-            }
-        }
-        return x > o ? "O" : "X";
+    public boolean isValidCell(String[] coordinate) {
+        return isValidIndex(coordinate);
     }
 
-    public String isValidPlacement(String[] coordinate) {
-        String numbers = "0123456789";
-        if (!numbers.contains(coordinate[0]) || !numbers.contains(coordinate[1])) {
-            return "You should enter numbers!";
-        }
-        if (!isValidIndex(coordinate)) {
-            return "Coordinates should be from 1 to 3!";
-        }
+    public boolean isOccupiedCell(String[] coordinate) {
         int index = getIndex(coordinate);
-        if (!cells[index].equals(" ")) {
-            return "This cell is occupied! Choose another one!";
-        }
-        return "";
+        return !cells[index].equals(" ");
     }
 
     public boolean isConcluded() {
@@ -83,7 +58,7 @@ public class GameBoard {
         return mark.equals(cells[j]) && mark.equals(cells[k]);
     }
 
-    public boolean isDraw() {
+    private boolean isDraw() {
         for (String cell : cells) {
             if (cell.equals(" ")) {
                 return false;
@@ -92,12 +67,16 @@ public class GameBoard {
         return true;
     }
 
-    public String getWinner() {
+    private String getWinner() {
         for (int[] row : rows) {
             if (areAllEqual(row[0], row[1], row[2])) {
                 return cells[row[0]].toUpperCase(Locale.ROOT);
             }
         }
         return "";
+    }
+
+    public String getResult() {
+        return isDraw() ? "Draw" : getWinner() + " wins";
     }
 }

@@ -4,22 +4,23 @@ public class Main {
     public static void main(String[] args) {
         // write your code here
         GameBoard gameBoard = new GameBoard();
-        Human human = new Human("X");
-        Machine machine = new Machine("O");
+        Human human = new Human(gameBoard, "X");
+        Machine machine = new Machine(gameBoard, "O");
         gameBoard.draw();
+        boolean isHumanNext = true;
         do {
-            human.collectInput("Enter the coordinates: ", gameBoard);
-            gameBoard.enterCoordinate(human.getCoordinate());
-            gameBoard.draw();
-            String winner = gameBoard.getWinner();
-            if (winner.length() > 0) {
-                System.out.println(winner + " wins");
-            } else if (gameBoard.isDraw()) {
-                System.out.println("Draw");
+            if (isHumanNext) {
+                human.requestShot("Enter the coordinates: ");
+                gameBoard.placeShot(human.getShot());
+                isHumanNext = false;
             } else {
-                System.out.println("Game not finished");
+                machine.requestShot("Making move level \"easy\"");
+                gameBoard.placeShot(machine.getShot());
+                isHumanNext = true;
             }
+            gameBoard.draw();
         }
         while (!gameBoard.isConcluded());
+        System.out.println(gameBoard.getResult());
     }
 }

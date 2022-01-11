@@ -4,31 +4,32 @@ import java.util.Scanner;
 
 public class Human extends Player {
     private final Scanner scanner;
-    String[] coordinate;
-    private String input;
 
-    public Human(String mark) {
-        super(mark);
+    public Human(GameBoard gameBoard, String mark) {
+        super(gameBoard, mark);
         scanner = new Scanner(System.in);
     }
 
     @Override
-    public void collectInput(String prompt, GameBoard gameBoard) {
+    public void requestShot(String prompt) {
         boolean doContinue;
         do {
+            doContinue = true;
             System.out.print(prompt);
-            input = scanner.nextLine();
-            coordinate = input.split(" ");
-            String feedback = gameBoard.isValidPlacement(coordinate);
-            doContinue = feedback.length() == 0;
-            if (!doContinue) {
-                System.out.println(feedback);
+            String[] coordinate = scanner.nextLine().split(" ");
+            if (!Shot.isValidCoordinate(coordinate)) {
+                System.out.println("You should enter numbers!");
+                doContinue = false;
             }
+            if (doContinue && !gameBoard.isValidCell(coordinate)) {
+                System.out.println("Coordinates should be from 1 to 3!");
+                doContinue = false;
+            }
+            if (doContinue && gameBoard.isOccupiedCell(coordinate)) {
+                System.out.println("This cell is occupied! Choose another one!");
+                doContinue = false;
+            }
+            shot = new Shot(coordinate, mark);
         } while (!doContinue);
-    }
-
-    @Override
-    public String[] getCoordinate() {
-        return coordinate;
     }
 }

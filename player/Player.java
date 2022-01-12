@@ -1,4 +1,7 @@
-package tictactoe;
+package tictactoe.player;
+
+import tictactoe.GameBoard;
+import tictactoe.Shot;
 
 public abstract class Player {
     public final String mark;
@@ -10,7 +13,7 @@ public abstract class Player {
         this.gameBoard = gameBoard;
     }
 
-    public abstract void requestShot(String prompt);
+    public abstract void requestShot();
 
     public Shot getShot() {
         return shot;

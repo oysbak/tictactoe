@@ -1,26 +1,22 @@
 package tictactoe;
 
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         // write your code here
-        GameBoard gameBoard = new GameBoard();
-        Human human = new Human(gameBoard, "X");
-        Machine machine = new Machine(gameBoard, "O");
-        gameBoard.draw();
-        boolean isHumanNext = true;
+        Scanner scanner = new Scanner(System.in);
+        GameManager gameManager;
         do {
-            if (isHumanNext) {
-                human.requestShot("Enter the coordinates: ");
-                gameBoard.placeShot(human.getShot());
-                isHumanNext = false;
-            } else {
-                machine.requestShot("Making move level \"easy\"");
-                gameBoard.placeShot(machine.getShot());
-                isHumanNext = true;
+            System.out.print("Input command: ");
+            gameManager = new GameManager(scanner.nextLine());
+            if (gameManager.doStart()) {
+                if (gameManager.isValidParameterSetup()) {
+                    new Game(gameManager);
+                } else {
+                    System.out.println("Bad parameters!");
+                }
             }
-            gameBoard.draw();
-        }
-        while (!gameBoard.isConcluded());
-        System.out.println(gameBoard.getResult());
+        } while (!gameManager.doExit());
     }
 }

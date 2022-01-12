@@ -1,4 +1,7 @@
-package tictactoe;
+package tictactoe.player;
+
+import tictactoe.GameBoard;
+import tictactoe.Shot;
 
 import java.util.Random;
 
@@ -9,8 +12,8 @@ public class Machine extends Player {
     }
 
     @Override
-    public void requestShot(String prompt) {
-        System.out.println(prompt);
+    public void requestShot() {
+        System.out.println("Making move level \"easy\"");
         String[] coordinate;
         boolean isOccupied;
         do {

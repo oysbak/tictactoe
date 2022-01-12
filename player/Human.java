@@ -1,4 +1,7 @@
-package tictactoe;
+package tictactoe.player;
+
+import tictactoe.GameBoard;
+import tictactoe.Shot;
 
 import java.util.Scanner;
 
@@ -11,11 +14,11 @@ public class Human extends Player {
     }
 
     @Override
-    public void requestShot(String prompt) {
+    public void requestShot() {
         boolean doContinue;
         do {
             doContinue = true;
-            System.out.print(prompt);
+            System.out.print("Enter the coordinates: ");
             String[] coordinate = scanner.nextLine().split(" ");
             if (!Shot.isValidCoordinate(coordinate)) {
                 System.out.println("You should enter numbers!");

@@ -38,7 +38,7 @@ public class GameManager {
         if (input.get(index).equalsIgnoreCase("user")) {
             return new Human(gameBoard, mark);
         } else {
-            return new Machine(gameBoard, mark);
+            return new Machine(gameBoard, input.get(index), mark);
         }
     }
 
@@ -48,6 +48,7 @@ public class GameManager {
 
     private boolean isValidPlayerType(int index) {
         return input.get(index).equalsIgnoreCase("user")
-                || input.get(index).equalsIgnoreCase("easy");
+                || input.get(index).equalsIgnoreCase("easy")
+                || input.get(index).equalsIgnoreCase("medium");
     }
 }

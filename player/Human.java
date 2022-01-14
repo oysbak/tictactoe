@@ -19,7 +19,7 @@ public class Human extends Player {
         do {
             doContinue = true;
             System.out.print("Enter the coordinates: ");
-            String[] coordinate = scanner.nextLine().split(" ");
+            String[] coordinate = scanner.nextLine().split("\\s+");
             if (!Shot.isValidCoordinate(coordinate)) {
                 System.out.println("You should enter numbers!");
                 doContinue = false;

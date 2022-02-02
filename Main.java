@@ -10,6 +10,7 @@ public class Main {
         do {
             System.out.print("Input command: ");
             gameManager = new GameManager(scanner.nextLine());
+
             if (gameManager.doStart()) {
                 if (gameManager.isValidParameterSetup()) {
                     new Game(gameManager);

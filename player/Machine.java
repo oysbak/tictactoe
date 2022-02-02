@@ -2,9 +2,8 @@ package tictactoe.player;
 
 import tictactoe.GameBoard;
 import tictactoe.Line;
+import tictactoe.MiniMaxAlgorithm;
 import tictactoe.Shot;
-
-import java.util.Random;
 
 public class Machine extends Player {
     private final String skill;
@@ -20,23 +19,22 @@ public class Machine extends Player {
         String[] coordinate;
         boolean isOccupied;
         do {
-            coordinate = getRandomCoordinate();
+            coordinate = getCoordinate();
             isOccupied = gameBoard.isOccupiedCell(coordinate);
         } while (isOccupied);
         shot = new Shot(coordinate, mark);
     }
 
-    private String[] getRandomCoordinate() {
-        Random random = new Random();
+    private String[] getCoordinate() {
         int row;
         int column;
         switch (skill) {
             case "easy":
-                row = random.nextInt(3) + 1;
-                column = random.nextInt(3) + 1;
-                break;
+                return GameBoard.getRandomCoordinate();
             case "medium":
                 return getBestCoordinate();
+            case "hard":
+                return getMiniMaxCoordinate();
             default:
                 row = 0;
                 column = 0;
@@ -51,17 +49,23 @@ public class Machine extends Player {
                 return line.getFirstFreeCell().getCoordinate();
             }
         }
-        // Prevent opponent?
-        String opponentMark = mark.equals("X") ? "O" : "X";
+        // Can I prevent opponent?
+        String opponentMark = getOpponentsMark();
         for (Line line : gameBoard.getLines()) {
             if (line.countEquals(opponentMark) == 2 && line.hasFreeCell()) {
                 return line.getFirstFreeCell().getCoordinate();
             }
         }
         // Standard random placement
-        Random random = new Random();
-        int row = random.nextInt(3) + 1;
-        int column = random.nextInt(3) + 1;
-        return new String[]{String.valueOf(row), String.valueOf(column)};
+        return GameBoard.getRandomCoordinate();
+    }
+
+    private String[] getMiniMaxCoordinate() {
+        MiniMaxAlgorithm miniMaxAlgorithm = new MiniMaxAlgorithm(getOpponentsMark(), mark, gameBoard.getCells());
+        return miniMaxAlgorithm.getCoordinate();
+    }
+
+    private String getOpponentsMark() {
+        return this.mark.equals("O") ? "X" : "O";
     }
 }

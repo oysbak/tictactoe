@@ -1,9 +1,11 @@
 package tictactoe;
 
 import java.util.Locale;
+import java.util.Random;
+
+import static tictactoe.Mark.FREE;
 
 public class GameBoard {
-    public static final String FREE = " ";
     String[] cells;
     int[][] lines;
 
@@ -73,6 +75,13 @@ public class GameBoard {
         return "123".contains(coordinate[0]) && "123".contains(coordinate[1]);
     }
 
+    public static String[] getRandomCoordinate() {
+        Random random = new Random();
+        int row = random.nextInt(3) + 1;
+        int column = random.nextInt(3) + 1;
+        return new String[]{String.valueOf(row), String.valueOf(column)};
+    }
+
     public void draw() {
         System.out.println("---------");
         System.out.println("| " + cells[0] + " " + cells[1] + " " + cells[2] + " |");
@@ -91,7 +100,7 @@ public class GameBoard {
 
     public boolean isOccupiedCell(String[] coordinate) {
         int index = getIndex(coordinate);
-        return !cells[index].equals(GameBoard.FREE);
+        return !cells[index].equals(FREE);
     }
 
     public boolean isConcluded() {
@@ -104,7 +113,7 @@ public class GameBoard {
 
     private boolean isDraw() {
         for (String cell : cells) {
-            if (cell.equals(GameBoard.FREE)) {
+            if (cell.equals(FREE)) {
                 return false;
             }
         }
@@ -113,7 +122,7 @@ public class GameBoard {
 
     private String getWinner() {
         for (int[] row : lines) {
-            if (areAllEqual(row[0], row[1], row[2]) && !cells[row[0]].equals(GameBoard.FREE)) {
+            if (areAllEqual(row[0], row[1], row[2]) && !cells[row[0]].equals(FREE)) {
                 return cells[row[0]].toUpperCase(Locale.ROOT);
             }
         }
@@ -122,16 +131,6 @@ public class GameBoard {
 
     public String getResult() {
         return isDraw() ? "Draw" : getWinner() + " wins";
-    }
-
-    public int countMarks(String[] cells, String mark) {
-        int count = 0;
-        for (String cell : cells) {
-            if (cell.equals(mark)) {
-                count++;
-            }
-        }
-        return count;
     }
 
     public Line[] getLines() {
@@ -145,5 +144,9 @@ public class GameBoard {
                 new Line(new Cell[]{new Cell(0, cells[0]), new Cell(4, cells[4]), new Cell(8, cells[8])}),
                 new Line(new Cell[]{new Cell(2, cells[2]), new Cell(4, cells[4]), new Cell(6, cells[6])})
         };
+    }
+
+    public String[] getCells() {
+        return cells;
     }
 }

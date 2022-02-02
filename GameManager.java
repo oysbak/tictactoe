@@ -19,7 +19,10 @@ public class GameManager {
     }
 
     public boolean doExit() {
-        return input.get(0).equalsIgnoreCase("exit");
+        return
+                input.get(0).equalsIgnoreCase("exit")
+                        || input.get(0).equalsIgnoreCase("end")
+                        || input.get(0).equalsIgnoreCase("quit");
     }
 
     public boolean doStart() {
@@ -49,6 +52,7 @@ public class GameManager {
     private boolean isValidPlayerType(int index) {
         return input.get(index).equalsIgnoreCase("user")
                 || input.get(index).equalsIgnoreCase("easy")
-                || input.get(index).equalsIgnoreCase("medium");
+                || input.get(index).equalsIgnoreCase("medium")
+                || input.get(index).equalsIgnoreCase("hard");
     }
 }

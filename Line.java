@@ -1,7 +1,7 @@
 package tictactoe;
 
 public class Line {
-    private Cell[] cells;
+    private final Cell[] cells;
 
     public Line(Cell[] cells) {
         this.cells = cells;
@@ -9,7 +9,7 @@ public class Line {
 
     public int countEquals(String mark) {
         int count = 0;
-        for (Cell cell: cells) {
+        for (Cell cell : cells) {
             if (cell.getMark().equals(mark)) {
                 count++;
             }
@@ -19,7 +19,7 @@ public class Line {
 
     public Cell getFirstFreeCell() {
         for (Cell cell : cells) {
-            if (cell.getMark().equals(GameBoard.FREE)) {
+            if (cell.getMark().equals(Mark.FREE)) {
                 return cell;
             }
         }
@@ -28,7 +28,7 @@ public class Line {
 
     public boolean hasFreeCell() {
         for (Cell cell : cells) {
-            if (cell.getMark().equals(GameBoard.FREE)) {
+            if (cell.getMark().equals(Mark.FREE)) {
                 return true;
             }
         }
